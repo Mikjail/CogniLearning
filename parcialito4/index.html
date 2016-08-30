@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" >
+<html ng-app="starter"> 
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="jquery,ui,easy,easyui,web">
+	<meta name="description" content="easyui help you build your web page easily!">
+	<title>jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+	
+</head>
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+ <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top" >
+                    Parcialito4
+                </a>
+            </div>
+
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse" style="float: left;">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#home">Inicio</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#form">Compras</a>
+                    </li>
+                    <li>
+                        <a class="g-signin2" data-onsuccess="onSignIn"></a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <ul class="nav navbar-nav" id="signIn">
+
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="registrar" href="#MymodalNorm " role="button" data-toggle="modal"  >Registrarse</a>
+                    </li>
+                </ul>
+            <!-- /.navbar-collapse -->
+            </div>
+        <!-- /.container -->
+        </div>
+    </nav>
+      <section id="home" class="intro-section">
+        <div class="container">
+            
+    <h1>HOME INICIO</h1>
+    <p>Este es el parcialito numero 4. Si desea ver la funcionalidades. Debe registrarse <a href="#MymodalNorm" role="button" data-toggle="modal">acá</a></p> 
+        </div>
+        
+
+ <div class="modal fade" id="MymodalNorm" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Registro
+                </h4>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                
+                <form role="form" id="form-validation" method="POST" action="">
+                          <div class="form-group">
+                            <label for="inputName" class="control-label">Name</label>
+                            <input type="text" pattern="[a-zA]+" class="form-control" id="inputName" placeholder="First Name" data-error="Los nombres deben contener solo caracteres de A-z" required>
+                            <div class="help-block with-errors">a-Z</div>
+                          </div>
+                
+                          <div class="form-group">
+                            <label for="inputEmail" class="control-label">Email</label>
+                            <input type="email" class="form-control" id="inputEmail" placeholder="Email" data-error="El email debe ser de la siguiente manera: example@example.com" required>
+                            <div class="help-block with-errors">example@example.com</div>
+                          </div>
+                            
+                          <div class="form-group">
+                              <label for="inputPassword" class="control-label">Password</label>
+                              <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" required>
+                                <div class="help-block">6 caracteres minimos</div>
+                          </div>
+                              
+                          <div class="form-group">
+                                <input type="password" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="Confirm" required>
+                                <div class="help-block with-errors">Confirme Password</div>
+                          </div>
+                         
+                        <div class="form-group">
+                            <div class="radio">
+                              <label>
+                                <input type="radio" name="Genero" value="Masculino" required>
+                                Masculino
+                              </label>
+                            </div>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" name="Genero" value="Masculino" required>
+                                Femenino
+                              </label>
+                            </div>
+
+                             <div class="form-group">  
+                            <button type="submit" class="btn btn-primary">Aceptar</button>
+                            <button class="btn btn-danger">Cancelar</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </section>
+
+ <section id="form" class="about-section" ng-controller="productosCtrl">
+ <div class="container">	<ul class="products">
+		<li ng-repeat="producto in productos">
+			<a href="#" class="item">
+				<img src="images/shirt1.gif"/>
+				<div>
+					<p>{{producto.id}}</p>
+					<p>{{producto.nombre}}</p>
+					<p>Price:${{producto.precio}}</p>
+				</div>
+			</a>
+		</li>
+	</ul>
+	<div class="cart">
+		<h1>Shopping Cart</h1>
+		<div style="background:#fff">
+		<table id="cartcontent" fitColumns="true" style="width:380px;height:auto;">
+			<thead>
+				<tr>
+					<th field="name" width=140>Name</th>
+					<th field="quantity" width=60 align="right">Quantity</th>
+					<th field="price" width=60 align="right">Price</th>
+					<th field="delete" width=60 align="right">Borrar</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+		<p class="total">Total: $0</p>
+		<h2>Drop here to add to cart</h2>
+	</div>
+	</div>
+
+ </section>
+
+ 	<script src="https://apis.google.com/js/platform.js" async defer></script> 
+	 <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <script src="js/angular.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="js/scrolling-nav.js"></script>
+    
+    <script src="js/funciones.js"></script>
+   
+    <script src="js/controller.js"></script>
+
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+
+    <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+
+</body>
+</html>

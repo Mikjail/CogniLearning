@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<link href="css/style.css" rel="stylesheet" />	
+	
+</head>
+<body>
+ <div class="container">   
+    <div class="row">   
+		               
+            <div class="col-lg-4 col-lg-offset-1 col-xs-10" id="formCont">
+            <form data-toggle="validator" role="form">
+          		<h1> Productos</h1>
+          		<div class="form-group">
+          		
+                       <label for="inputName" class="control-label">Producto</label>
+                       <input type="text" pattern="[a-zA]+" class="form-control" id="producto" placeholder="Producto" data-error="Los nombres deben contener solo caracteres de A-z" required>
+                       <div class="help-block with-errors">a-Z</div>
+                </div>
+                <div class="form-group">
+                       <label for="altura">Precio</label>
+                       <input type="number" class="form-control" id="precio" placeholder="precio" data-error="Solo Debe tener numeros" required>
+                       <div class="help-block with-errors">0-9</div>
+                </div>
+                <div class="form-group">
+                       <label for="altura">Cantidad</label>
+                       <input type="number" class="form-control" id="cantidad" placeholder="cantidad" data-error="Solo Debe tener numeros" required>
+                       <div class="help-block with-errors">0-9</div>
+                </div>
+                <div class="form-group">  
+                       <button onclick="agregarProducto(); return false;" type="submit" class="btn btn-primary">Aceptar</button>
+                </div>
+            </form>                
+		</div>
+		
+		<div class="col-lg-6 col-lg-offset-1">
+			<div class="table-responsive">
+			<table class="table table-condensed table-hover table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th style="text-align: center;">No</th>
+                        <th style="text-align: center;">Producto</th>
+                        <th style="text-align: center;">Precio</th>
+                        <th style="text-align: center;">Cant</th>
+                        <th style="text-align: center;">Subt</th>
+                        <th style="text-align: center;">Borrar</th>
+                      </tr>
+                    </thead>
+                    <tbody id="content-placeholder"> 
+                    </tbody>        
+            </div>
+		</div>
+		<div class="col-md-8">	
+<!--Your new content will be displayed in here-->
+<!--Data will be inserted in its according place, replacing the brackets.-->
+<script id="address-template" type="text/x-handlebars-template">
+                      <tr id="producto{{id}}">
+                        <td>{{id}}</td>
+                        <td>{{producto}}</td>
+                        <td>{{precio}}</td>
+                        <td >{{cantidad}}</td>
+                        <td>{{subtotal}}</td>
+                        <td>
+                            <div class="btn btn-danger" onclick="borrar({{id}}); return false;">Borrar</div>
+                        </td>
+                      </tr>
+</script>           
+</div>
+	</div>
+</div>
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap Validator -->
+
+    <script src="js/validator.js"></script>
+
+    <!-- Bootstrap Handlebars -->
+
+	<script src="js/handlebars.js"></script>
+
+	<script src="js/funcionesjs.js"></script>
+</body>
+</html>
