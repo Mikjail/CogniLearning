@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
@@ -23,7 +22,8 @@
     <script src="<c:url value="/js/jquery.validate.js" />"></script>
     <script src="<c:url value="/js/messages_es.js" />"></script>
     <script src="<c:url value="/js/select2.min.js" />"></script>
- 
+	<script src="<c:url value="/js/funciones.js" />"></script>
+	 
 
   </head>
 
@@ -45,12 +45,13 @@
             <li class="active"><a href="<c:url value="/home/index.html" />">Home</a></li>
             <li><a href="<c:url value="/proyectos/listar.html" />">Proyectos</a></li>
             <li><a href="<c:url value="/usuarios/listar.html" />">Usuarios</a></li>
-          </ul>
+          </ul>	
         </div><!--/.nav-collapse -->
       </div>
+     
     </nav>
 
 	<!-- container -->
     <div class="container">
-
+	
 

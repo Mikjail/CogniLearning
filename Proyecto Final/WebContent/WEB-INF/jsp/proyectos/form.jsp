@@ -17,9 +17,20 @@
 <script type="text/javascript">
 $(function() {
 	$('#proyectoForm').validate();
-	$(".js-example-basic-multiple").select2();
+	$(".js-example-basic-multiple ").select2();
+	
 });
 </script>
+
+
+<form:form id="formBuscar" method="post" modelAttribute="buscarNombre" 
+         class="navbar-form navbar-left" role="search"
+         action="buscarNombre.html">
+		  <div class="form-group">
+		    <input type="text" class="form-control" placeholder="Search">
+		  </div>
+		  <button type="submit" class="btn btn-default">Submit</button>
+		</form:form>
 
 <form:form id="proyectoForm" method="post" modelAttribute="proyectoForm"
 	action="guardarproyecto.html">

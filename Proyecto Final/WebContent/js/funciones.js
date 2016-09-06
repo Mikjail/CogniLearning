@@ -1,4 +1,6 @@
-$(function() {
-		$('#proyectoForm').validate();
-		$(".js-example-basic-multiple").select2();
+function buscar() {
+	var datos = $("#miForm").serialize();
+	$.post("buscarNombreUsuario.html", datos, function(resp) {
+		$("#resultado").html(resp);
 	});
+}

@@ -72,5 +72,13 @@ public class ProyectoServiceImp implements ProyectoService {
 		proyectoDAO.actualizarProyecto(proyecto);
 	}
 
+	@Override
+	public List<Usuario> buscarPorNombre(String nombre) {
+		// TODO Auto-generated method stu
+		return proyectoDAO.recuperarProyectosPorNombre(nombre);
+		
+		
+	}
+
 	
 }

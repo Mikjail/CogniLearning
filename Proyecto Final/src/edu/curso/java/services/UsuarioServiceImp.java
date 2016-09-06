@@ -57,6 +57,13 @@ public class UsuarioServiceImp implements UsuarioService {
 		
 		usuarioDAO.borrarUsuario(id);
 	}
+
+	@Override
+	public List<Usuario> buscarPorNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return usuarioDAO.buscarPorNombre(nombre);
+	}
+
 	
 	
 	

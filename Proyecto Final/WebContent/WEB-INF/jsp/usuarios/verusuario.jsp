@@ -13,7 +13,7 @@
   <h2>Usuario Modificado</h2>
 </div>
 
-<table class="table table-condensed table-hover table-striped table-bordered">
+		<table class="table table-condensed table-hover table-striped table-bordered">
                     <thead>
                       <tr>
                         <th style="text-align: center;">Id</th>
@@ -31,7 +31,7 @@
                     </tr>
                  </tbody>
               </table>
-			</div>
+		
 			
 
 <c:import url="/general/template_bottom.jsp" />

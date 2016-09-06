@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.curso.java.bo.Proyecto;
 import edu.curso.java.bo.ProyectoForm;
+import edu.curso.java.bo.Usuario;
 import edu.curso.java.services.ProyectoService;
 import edu.curso.java.services.UsuarioService;
 
@@ -83,5 +84,10 @@ public class ProyectosController {
 		return "redirect:/proyectos/verproyecto.html?id=" + idActual;
 	}
 	
-	
+	@RequestMapping(value = "/buscarPorNombreProyecto")
+	public String buscarporNombre(@ModelAttribute("nombre") String nombre,Model model){
+		List<Usuario> usuariosEncontrados = proyectoService.buscarPorNombre(nombre);
+		model.addAttribute("usuarioBuscado", usuariosEncontrados);
+		return null;
+	}
 }

@@ -3,6 +3,7 @@ package edu.curso.java.services;
 import java.util.List;
 
 import edu.curso.java.bo.Proyecto;
+import edu.curso.java.bo.Usuario;
 
 public interface ProyectoService {
 
@@ -17,5 +18,7 @@ public interface ProyectoService {
 	Long guardarProyecto(Proyecto proyecto, Long idUsuarioPrincipal, Long[] idUsuarios);
 
 	void actualizarProyecto(Proyecto proyecto, Long idUsuarioPrincipal, Long[] idUsuarios);
+
+	List<Usuario> buscarPorNombre(String nombre);
 
 }

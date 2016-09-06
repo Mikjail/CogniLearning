@@ -16,4 +16,6 @@ public interface UsuarioService {
 
 	void borrarUsuario(Long id);
 
+	List<Usuario> buscarPorNombre(String nombre);
+
 }

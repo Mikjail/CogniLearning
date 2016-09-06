@@ -84,4 +84,11 @@ public class UsuariosController {
 			usuarioService.borrarUsuario(id);
 			return "redirect:/usuarios/listar.html";
 		}
+		
+		@RequestMapping(value="buscarNombreUsuario", method = RequestMethod.POST)
+		public String buscarporNombre(@ModelAttribute("nombre") String nombre,Model model){
+			List<Usuario> usuariosEncontrados = usuarioService.buscarPorNombre(nombre);
+			model.addAttribute("usuarioBuscado", usuariosEncontrados);
+			return null;
+		}
 }

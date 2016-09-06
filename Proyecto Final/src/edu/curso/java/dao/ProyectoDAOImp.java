@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.curso.java.bo.Proyecto;
+import edu.curso.java.bo.Usuario;
 
 @Repository
 public class ProyectoDAOImp implements ProyectoDAO {
@@ -47,6 +48,16 @@ public class ProyectoDAOImp implements ProyectoDAO {
 		// TODO Auto-generated method stub
 		return (Long) sessionFactory.getCurrentSession().save(proyecto);
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Usuario> recuperarProyectosPorNombre(String nombre) {
+		// TODO Auto-generated method stub
+		String hql = "from Proyecto as p where p.nombre LIKE :nombre";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString("nombre","%" + nombre + "%");
+		return query.list();
 	}
 	
 	

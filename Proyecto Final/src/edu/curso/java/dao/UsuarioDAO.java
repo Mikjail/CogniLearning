@@ -15,4 +15,6 @@ public interface UsuarioDAO {
 	void actualizarUsuario(Usuario usuario);
 
 	void borrarUsuario(Long id);
+
+	List<Usuario> buscarPorNombre(String nombre);
 }
