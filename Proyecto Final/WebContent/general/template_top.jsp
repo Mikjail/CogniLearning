@@ -16,14 +16,15 @@
     <link href="<c:url value="/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/css/general.css" />" rel="stylesheet">
     <link href="<c:url value="/css/jquery-ui.min.css" />" rel="stylesheet">
-    <link href="<c:url value="/css/slect2.min.css" />" rel="stylesheet">
+    <link href="<c:url value="/css/select2.min.css" />" rel="stylesheet">
 	<script src="<c:url value="/js/jquery-3.1.0.js" />"></script>
-	<script src="<c:url value="/js/slect2.min.js" />"></script>
 	<script src="<c:url value="/js/jquery-ui.min.js" />"></script>
     <script src="<c:url value="/js/bootstrap.min.js" />"></script>
     <script src="<c:url value="/js/jquery.validate.js" />"></script>
     <script src="<c:url value="/js/messages_es.js" />"></script>
-    <script src="<c:url value="/js/funciones.js" />"></script>
+    <script src="<c:url value="/js/select2.min.js" />"></script>
+ 
+
   </head>
 
   <body>

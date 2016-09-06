@@ -14,7 +14,12 @@
   </div>
   <h2>Form Proyecto</h2>
 </div>
-
+<script type="text/javascript">
+$(function() {
+	$('#proyectoForm').validate();
+	$(".js-example-basic-multiple").select2();
+});
+</script>
 
 <form:form id="proyectoForm" method="post" modelAttribute="proyectoForm"
 	action="guardarproyecto.html">
@@ -42,6 +47,7 @@
 	<div class="form-group">
 		<label for="idUsuarios">Usuarios</label>
 		<form:select multiple="true" path="idUsuarios" 
+			class="js-example-basic-multiple"
 			items="${usuarios}"
 			itemLabel="nombreCompleto"
 			itemValue="id"
