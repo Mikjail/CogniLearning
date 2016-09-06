@@ -4,11 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:import url="/general/template_top.jsp" />
-<script>
-	$(function() {
-		$('#proyectoForm').validate();
-	});
-</script>
+
 
 <div class='page-header'>
   <div class='btn-toolbar pull-right'>
@@ -35,7 +31,8 @@
 
 	<div class="form-group">
 		<label for="usuarioPrincipal">Usuario principal</label>
-		<form:select path="idUsuarioPrincipal" 
+		<form:select path="idUsuarioPrincipal"
+			class="js-example-basic-multiple" 
 			items="${usuarios}"
 			itemLabel="nombreCompleto"
 			itemValue="id"

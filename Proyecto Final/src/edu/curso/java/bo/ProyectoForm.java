@@ -2,7 +2,7 @@ package edu.curso.java.bo;
 
 public class ProyectoForm {
 
-	private Long Id;
+	private Long id;
 	private String nombre;
 	private String descripcion;
 	private Long idUsuarioPrincipal;
@@ -10,10 +10,10 @@ public class ProyectoForm {
 	private Long[] idUsuarios;
 	
 	public Long getId() {
-		return Id;
+		return id;
 	}
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
 	public String getNombre() {
 		return nombre;

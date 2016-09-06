@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.curso.java.bo.Usuario;
-import edu.curso.java.controllers.ProyectosController;
 import edu.curso.java.dao.UsuarioDAO;
 
 @Service
@@ -18,7 +17,7 @@ public class UsuarioServiceImp implements UsuarioService {
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 	
-	private static final Logger log = Logger.getLogger(ProyectosController.class);
+	private static final Logger log = Logger.getLogger(UsuarioService.class);
 	
 	/* (non-Javadoc)
 	 * @see edu.curso.java.services.UsuarioService#crearNuevoUsuario(edu.curso.java.bo.Usuario)
