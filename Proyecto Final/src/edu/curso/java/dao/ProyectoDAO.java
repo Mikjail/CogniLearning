@@ -3,16 +3,17 @@ package edu.curso.java.dao;
 import java.util.List;
 
 import edu.curso.java.bo.Proyecto;
+import edu.curso.java.bo.Tarea;
 import edu.curso.java.bo.Usuario;
 
 public interface ProyectoDAO {
 
-	public Long crearNuevoProyecto(Proyecto proyecto);
+	public Long guardarProyecto(Proyecto proyecto);
 	public List<Proyecto> listarProyectos();
 	public Proyecto recuperarProyectoPorId(Long id);
-	public void actualizarProyecto(Proyecto proyecto);
-	public Long guardarProyecto(Proyecto proyecto);
-	public List<Usuario> recuperarProyectosPorNombre(String nombre);
-	
+	void agregarUsuarioProyecto(Usuario usuario, Long id);
+	List<Tarea> borrarProyectoPorId(Long id);
+	void editarProyecto(Proyecto proyecto);
+	public List<Proyecto> buscarProyectoPorNombre(String campoBuscar);
 	
 }

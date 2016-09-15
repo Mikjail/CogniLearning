@@ -12,9 +12,9 @@ public interface UsuarioDAO {
 
 	List<Usuario> recuperarUsuarios();
 
-	void actualizarUsuario(Usuario usuario);
+	void borrarUsuarioPorId(Long id);
+	
+	void editarUsuario(Usuario usuario);
 
-	void borrarUsuario(Long id);
-
-	List<Usuario> buscarPorNombre(String nombre);
+	List<Usuario> buscarUsuariosPorNombre(String campoBuscar);
 }

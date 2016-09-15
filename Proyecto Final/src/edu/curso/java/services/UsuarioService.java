@@ -6,16 +6,15 @@ import edu.curso.java.bo.Usuario;
 
 public interface UsuarioService {
 
-	long crearNuevoUsuario(Usuario usuario);
+	Long crearNuevoUsuario(Usuario usuario);
 
 	List<Usuario> recuperarUsuarios();
 
-	Usuario recuperarUsuarioPorID(Long id);
-
-	void actualizarUsuario(Usuario usuario);
+	Usuario recuperarUsuarioPorId(Long id);
 
 	void borrarUsuario(Long id);
 
-	List<Usuario> buscarPorNombre(String nombre);
+	void editarUsuario(Usuario usuario);
 
+	List<Usuario> buscarUsuariosPorNombre(String campoBuscar);
 }

@@ -11,8 +11,7 @@ import edu.curso.java.bo.Usuario;
 
 @Repository
 public class UsuarioDAOImp implements UsuarioDAO {
-	
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -20,7 +19,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	 * @see edu.curso.java.dao.UsuarioDAO#guardarUsuario(edu.curso.java.bo.Usuario)
 	 */
 	@Override
-	public Long guardarUsuario(Usuario usuario){
+	public Long guardarUsuario(Usuario usuario) {
 		sessionFactory.getCurrentSession().save(usuario);
 		return usuario.getId();
 	}
@@ -29,8 +28,9 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	 * @see edu.curso.java.dao.UsuarioDAO#recuperarUsuarioPorId(java.lang.Long)
 	 */
 	@Override
-	public Usuario recuperarUsuarioPorId(Long id){
-		return (Usuario) sessionFactory.getCurrentSession().load(Usuario.class, id);
+	public Usuario recuperarUsuarioPorId(Long id) {
+		return (Usuario) sessionFactory.getCurrentSession()
+				.load(Usuario.class, id);
 	}
 	
 	/* (non-Javadoc)
@@ -38,35 +38,32 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> recuperarUsuarios(){
-		String hql = "from Usuario as u order by u.nombreCompleto";
-		Query  query = sessionFactory.getCurrentSession().createQuery(hql);
+	public List<Usuario> recuperarUsuarios() {
+		String hql = "from Usuario as u where u.activo = 1 order by u.nombreCompleto";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		return query.list();
 	}
 
 	@Override
-	public void actualizarUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		sessionFactory.getCurrentSession().update(usuario);
-	}
-
-	@Override
-	public void borrarUsuario(Long id) {
-		// TODO Auto-generated method stub
+	public void borrarUsuarioPorId(Long id) {
 		Usuario usuario = this.recuperarUsuarioPorId(id);
-		sessionFactory.getCurrentSession().delete(usuario);
+		usuario.setActivo(false);	
+		editarUsuario(usuario);
+	}
+	
+	@Override
+	public void editarUsuario(Usuario usuario) {
+		
+		sessionFactory.getCurrentSession().update(usuario);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> buscarPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		String hql = "from Usuario as u where u.nombreCompleto LIKE :nombre";
+	public List<Usuario> buscarUsuariosPorNombre(String campoBuscar) {
+		String hql = "from Usuario as u where u.activo = 1 and (u.nombreCompleto like :textoBuscar or u.usuario like :textoBuscar)";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		query.setString("nombre","%"+ nombre + "%");
+		query.setString("textoBuscar", "%" + campoBuscar + "%");
 		return query.list();
 	}
-
-	
 	
 }

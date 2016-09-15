@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.curso.java.bo.*;
+import edu.curso.java.bo.Proyecto;
+import edu.curso.java.bo.Tarea;
+import edu.curso.java.bo.Usuario;
 import edu.curso.java.dao.ProyectoDAO;
 import edu.curso.java.dao.UsuarioDAO;
 
@@ -16,10 +18,16 @@ public class ProyectoServiceImp implements ProyectoService {
 
 	@Autowired
 	ProyectoDAO proyectoDAO;
-	
 	@Autowired
 	UsuarioDAO usuarioDAO;
 	
+	@Autowired
+	TareaService tareaService;
+	
+	@Override
+	public Long guardarProyecto(Proyecto proyecto) {
+		return proyectoDAO.guardarProyecto(proyecto);
+	}
 	
 	@Override
 	public List<Proyecto> listarProyectos() {
@@ -28,57 +36,65 @@ public class ProyectoServiceImp implements ProyectoService {
 
 	@Override
 	public Proyecto recuperarProyectoPorId(Long id) {
-		// TODO Auto-generated method stub
+		
 		return proyectoDAO.recuperarProyectoPorId(id);
 	}
 
 	@Override
-	public Long crearNuevoProyecto(Proyecto proyecto) {
-		// TODO Auto-generated method stub
-		return proyectoDAO.crearNuevoProyecto(proyecto);
+	public void agregarUsuarioProyecto(Usuario usuario, Long id) {
+		proyectoDAO.agregarUsuarioProyecto(usuario, id);
+		
 	}
 
 	@Override
-	public void actualizarProyecto(Proyecto proyecto) {
-		proyectoDAO.actualizarProyecto(proyecto);
-	}
-	
-	@Override
-	public Long guardarProyecto(Proyecto proyecto, Long idUsuarioPrincipal, Long[] idUsuarios) {
-		// TODO Auto-generated method stub
-		Usuario usuarioPrincipal = usuarioDAO.recuperarUsuarioPorId(idUsuarioPrincipal);
-				
-		for (Long idUsuario : idUsuarios) {
-			proyecto.getUsuarios().add(usuarioDAO.recuperarUsuarioPorId(idUsuario));
+	public void borrarProyectoPorId(Long id) {
+		List<Tarea> tareas = proyectoDAO.borrarProyectoPorId(id);
+		for(Tarea tarea : tareas){
+			tareaService.borrarTareaPorId(tarea.getId());
 		}
 		
-		proyecto.setUsuarioPrincipal(usuarioPrincipal);
-		proyecto.setId(proyectoDAO.guardarProyecto(proyecto));
+	}
+
+	@Override
+	public void editarProyecto(Proyecto proyecto) {
+		proyectoDAO.editarProyecto(proyecto);
+		
+	}
+
+	@Override
+	public Long guardarProyecto(Proyecto proyecto, Long idUsuarioPrincipal) {
+		
+		Usuario usuario = usuarioDAO.recuperarUsuarioPorId(idUsuarioPrincipal);
+		proyecto.setUsuarioPrincipal(usuario);
+		proyectoDAO.guardarProyecto(proyecto);
+		return proyecto.getId();
+	}
+
+	@Override
+	public Long actualizarProyecto(Proyecto proyecto, Long idUsuarioPrincipal, Long[] idUsuarios) {
+		Usuario usuarioPpal = usuarioDAO.recuperarUsuarioPorId(idUsuarioPrincipal);
+		proyecto.getUsuarios().clear();
+		for (Long id : idUsuarios) {
+			Usuario usuario = usuarioDAO.recuperarUsuarioPorId(id);
+			proyecto.getUsuarios().add(usuario);
+		}
+			
+		
+		proyecto.setUsuarioPrincipal(usuarioPpal);
+		proyectoDAO.guardarProyecto(proyecto);
 		return proyecto.getId();
 		
 	}
 
 	@Override
-	public void actualizarProyecto(Proyecto proyecto, Long idUsuarioPrincipal, Long[] idUsuarios) {
-		// TODO Auto-generated method stub
-		Usuario usuarioPrincipal = usuarioDAO.recuperarUsuarioPorId(idUsuarioPrincipal);
-		proyecto.getUsuarios().clear();
-		
-		for (Long idUsuario : idUsuarios) {
-			proyecto.getUsuarios().add(usuarioDAO.recuperarUsuarioPorId(idUsuario));
-		}
-		
-		proyecto.setUsuarioPrincipal(usuarioPrincipal);
-		proyectoDAO.actualizarProyecto(proyecto);
+	public List<Proyecto> buscarProyectosPorNombre(String campoBuscar) {
+		return proyectoDAO.buscarProyectoPorNombre(campoBuscar);
 	}
-
-	@Override
-	public List<Usuario> buscarPorNombre(String nombre) {
-		// TODO Auto-generated method stu
-		return proyectoDAO.recuperarProyectosPorNombre(nombre);
-		
-		
-	}
-
 	
+	@Override
+	public void editarTiempoProyecto(Double duracionEstimada, Long idProyecto) {
+		Proyecto proyecto = proyectoDAO.recuperarProyectoPorId(idProyecto);
+		proyecto.setTiempoEstimado(proyecto.getTiempoEstimado()-duracionEstimada);
+		proyectoDAO.guardarProyecto(proyecto);
+	}
 }

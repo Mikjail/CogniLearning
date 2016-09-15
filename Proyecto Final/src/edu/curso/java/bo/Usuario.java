@@ -1,19 +1,44 @@
 package edu.curso.java.bo;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"usuario"}))
 public class Usuario {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-
+	
 	private String nombreCompleto;
 	private String usuario;
 	private String password;
 	private boolean activo;
+	@OneToMany
+	private List<Roles> rol;
 	
+	
+	public Usuario(){
+		this.activo=true;
+	}
+	
+	
+	public Usuario(String nombreCompleto, String usuarioPassword, String usuarioPerfil) {
+		// TODO Auto-generated constructor stub
+		this.setNombreCompleto(nombreCompleto);
+		this.setPassword(usuarioPassword);
+		this.setUsuario(usuarioPerfil);
+	}
+
+
+	public List<Roles> getRol() {
+		return rol;
+	}
+	public void setRol(List<Roles> rol) {
+		this.rol = rol;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -23,8 +48,8 @@ public class Usuario {
 	public String getNombreCompleto() {
 		return nombreCompleto;
 	}
-	public void setNombreCompleto(String nombreCompleta) {
-		this.nombreCompleto = nombreCompleta;
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
 	}
 	public String getUsuario() {
 		return usuario;
@@ -44,6 +69,5 @@ public class Usuario {
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
-	
 	
 }

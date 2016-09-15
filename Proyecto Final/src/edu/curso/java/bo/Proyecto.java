@@ -1,8 +1,16 @@
 package edu.curso.java.bo;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Proyecto {
@@ -10,33 +18,52 @@ public class Proyecto {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
 	private String nombre;
 	private String descripcion;
-	@ManyToMany
-	private List<Usuario> usuarios = new ArrayList<Usuario>();
-	private boolean activo;
 	@ManyToOne
 	private Usuario usuarioPrincipal;
-
-	@OneToMany
-	private List<Tarea> tareas = new ArrayList<Tarea>();
-
-
-	public boolean isActivo() {
-		return activo;
+	@ManyToMany
+	private List<Usuario> usuarios = new ArrayList<Usuario>();
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<Tarea> tareas = new ArrayList<>();
+	private Boolean estado;
+	private double tiempoEstimado;
+	private Date fechaAlta;
+	
+	public Proyecto(){
+		this.estado = true;
+	}
+	
+	public Boolean getEstado() {
+		return estado;
 	}
 
-	public void setActivo(boolean activo) {
-		this.activo = activo;
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
+	public List<Tarea> getTareas() {
+		return tareas;
+	}
+
+	public void setTareas(List<Tarea> tareas) {
+		this.tareas = tareas;
 	}
 
 	public Long getId() {
 		return id;
 	}
 	
-	public void setId(Long b) {
-		this.id = b;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	public String getNombre() {
@@ -55,7 +82,6 @@ public class Proyecto {
 		this.descripcion = descripcion;
 	}
 
-	
 	public Usuario getUsuarioPrincipal() {
 		return usuarioPrincipal;
 	}
@@ -64,19 +90,22 @@ public class Proyecto {
 		this.usuarioPrincipal = usuarioPrincipal;
 	}
 
-	public List<Tarea> getTareas() {
-		return tareas;
+	public double getTiempoEstimado() {
+		return tiempoEstimado;
 	}
 
-	public void setTareas(List<Tarea> tareas) {
-		this.tareas = tareas;
+	public void setTiempoEstimado(double tiempoEstimado) {
+		this.tiempoEstimado = tiempoEstimado;
+	}
+
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 	
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}	
+	
+	
 }

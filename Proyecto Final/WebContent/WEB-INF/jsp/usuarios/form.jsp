@@ -1,56 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:import url="/general/template_top.jsp" />
+
 <script>
-	$(function() {
-		$('#usuarioForm').validate();
-		$('#fechaAlta').datepicker({"dateFormat": "yy-mm-dd"});
-	});
+formInit("usuario");
+
 </script>
 
-<div class='page-header'>
-  <div class='btn-toolbar pull-right'>
-    <div class='btn-group'>
-      <a href="listar.html" class="btn btn-default">Volver</a>
-    </div>
-  </div>
-  <h2>Form usuario</h2>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+
+<div class="form form-group table">
+	<form:form method="post" modelAttribute="usuarioForm" action="guardarusuario.html" id="form">
+		<form:input path="id" type="hidden" />
+		<div class="form-group">
+			<label for="nombreCompleto">Nombre Completo</label>
+			<form:input class="form-control required" path="nombreCompleto" type="text" />
+		</div>
+		<div class="form-group">
+			<label for="usuario">Usuario</label>
+			<form:input class="form-control required" path="usuario" type="text" />
+		</div>
+		<div class="form-group">
+			<label for="password">Contraseña</label>
+			<form:input class="form-control required" path="password" type="password" />
+		</div>
+		<div>
+			<input type="submit" class="btn btn-success" value="Guardar">
+			<a href="<c:url value="/usuarios/listar.html" />" class="btn btn-danger">Cancelar</a>
+		</div>
+	</form:form>
 </div>
-
-
-<form:form id="usuarioForm" method="post" modelAttribute="usuarioForm"
-	action="guardarusuario.html">
-	<form:input path="id" type="hidden" />
-	<div class="form-group">
-		<label for="nombreCompleto">Nombre completo</label>
-		<form:input path="nombreCompleto" class="form-control  required" type="text" />
-	</div>
-
-	<div class="form-group">
-		<label for="usuario">Usuario</label>
-		<form:input path="usuario" class="form-control required" type="text" />
-	</div>
-
-<!-- 	<div class="form-group"> -->
-<!-- 		<label for="fechaAlta">Fecha alta</label> -->
-<%-- 		<form:input id="fechaAlta" path="fechaAlta" class="form-control required" type="text" /> --%>
-<!-- 	</div> -->
-
-	<div class="form-group">
-		<label for="password">Password</label>
-		<form:input path="password" type="password" class="form-control  required" />
-	</div>
-
-	<div class="checkbox">
-		<label> <form:checkbox path="activo" /> Activo
-		</label>
-	</div>
-
-	<input type="submit" class="btn btn-default" value="Guardar">
-</form:form>
-
+	
 
 <c:import url="/general/template_bottom.jsp" />

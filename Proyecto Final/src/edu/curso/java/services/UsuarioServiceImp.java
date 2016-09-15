@@ -1,6 +1,6 @@
 package edu.curso.java.services;
 
-import java.util.*;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +14,18 @@ import edu.curso.java.dao.UsuarioDAO;
 @Transactional
 public class UsuarioServiceImp implements UsuarioService {
 
+	private static final Logger log = Logger.
+			getLogger(UsuarioServiceImp.class);
+	
 	@Autowired
 	private UsuarioDAO usuarioDAO;
-	
-	private static final Logger log = Logger.getLogger(UsuarioService.class);
 	
 	/* (non-Javadoc)
 	 * @see edu.curso.java.services.UsuarioService#crearNuevoUsuario(edu.curso.java.bo.Usuario)
 	 */
 	@Override
-	public long crearNuevoUsuario(Usuario usuario){
-		log.info("Creando usuario");
-		usuario.setActivo(true);
+	public Long crearNuevoUsuario(Usuario usuario) {
+
 		return usuarioDAO.guardarUsuario(usuario);
 	}
 	
@@ -33,38 +33,30 @@ public class UsuarioServiceImp implements UsuarioService {
 	 * @see edu.curso.java.services.UsuarioService#recuperarUsuarios()
 	 */
 	@Override
-	public List<Usuario> recuperarUsuarios(){
+	public List<Usuario> recuperarUsuarios() {
 		return usuarioDAO.recuperarUsuarios();
 	}
 	
 	/* (non-Javadoc)
-	 * @see edu.curso.java.services.UsuarioService#recuperarUsuarioPorID(java.lang.Long)
+	 * @see edu.curso.java.services.UsuarioService#recuperarUsuarioPorId(java.lang.Long)
 	 */
 	@Override
-	public Usuario recuperarUsuarioPorID(Long id){
-		log.info("Ingresando a recuperar datos por id");
+	public Usuario recuperarUsuarioPorId(Long id) {
+		log.info("Recuperando el usuario con id: " + id);
 		return usuarioDAO.recuperarUsuarioPorId(id);
-	}
-	
-	@Override
-	public void actualizarUsuario(Usuario usuario) {
-		usuarioDAO.actualizarUsuario(usuario);
 	}
 
 	@Override
 	public void borrarUsuario(Long id) {
-		// TODO Auto-generated method stub
-		
-		usuarioDAO.borrarUsuario(id);
+		usuarioDAO.borrarUsuarioPorId(id);
+	}
+	
+	public void editarUsuario(Usuario usuario) {
+		usuarioDAO.editarUsuario(usuario);
 	}
 
 	@Override
-	public List<Usuario> buscarPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return usuarioDAO.buscarPorNombre(nombre);
+	public List<Usuario> buscarUsuariosPorNombre(String campoBuscar) {
+		return usuarioDAO.buscarUsuariosPorNombre(campoBuscar);
 	}
-
-	
-	
-	
 }

@@ -7,18 +7,15 @@ import edu.curso.java.bo.Usuario;
 
 public interface ProyectoService {
 
-	List<Proyecto> listarProyectos();
-
-	Proyecto recuperarProyectoPorId(Long id);
-
-	Long crearNuevoProyecto(Proyecto proyecto);
-
-	void actualizarProyecto(Proyecto proyecto);
-
-	Long guardarProyecto(Proyecto proyecto, Long idUsuarioPrincipal, Long[] idUsuarios);
-
-	void actualizarProyecto(Proyecto proyecto, Long idUsuarioPrincipal, Long[] idUsuarios);
-
-	List<Usuario> buscarPorNombre(String nombre);
+	public Long guardarProyecto(Proyecto proyecto);
+	public List<Proyecto> listarProyectos();
+	public Proyecto recuperarProyectoPorId(Long id);
+	void agregarUsuarioProyecto(Usuario usuario, Long id);
+	void borrarProyectoPorId(Long id);
+	void editarProyecto(Proyecto proyecto);
+	public Long guardarProyecto(Proyecto proyecto, Long idUsuarioPrincipal);
+	public Long actualizarProyecto(Proyecto proyecto, Long idUsuarioPrincipal, Long[] idUsuarios);
+	public List<Proyecto> buscarProyectosPorNombre(String campoBuscar);
+	void editarTiempoProyecto(Double duracionEstimada, Long idProyecto);
 
 }
