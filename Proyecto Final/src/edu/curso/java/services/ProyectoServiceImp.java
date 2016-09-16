@@ -1,11 +1,9 @@
 package edu.curso.java.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import edu.curso.java.bo.Proyecto;
 import edu.curso.java.bo.Tarea;
 import edu.curso.java.bo.Usuario;
@@ -20,24 +18,24 @@ public class ProyectoServiceImp implements ProyectoService {
 	ProyectoDAO proyectoDAO;
 	@Autowired
 	UsuarioDAO usuarioDAO;
-	
 	@Autowired
 	TareaService tareaService;
 	
 	@Override
-	public Long guardarProyecto(Proyecto proyecto) {
-		return proyectoDAO.guardarProyecto(proyecto);
+	public Long guardarProyecto(Proyecto proyecto){
+		
+		return proyectoDAO.guardarClase(proyecto);
 	}
 	
 	@Override
 	public List<Proyecto> listarProyectos() {
-		return proyectoDAO.listarProyectos();
+		return proyectoDAO.listarClase(new Proyecto());
 	}
 
 	@Override
 	public Proyecto recuperarProyectoPorId(Long id) {
 		
-		return proyectoDAO.recuperarProyectoPorId(id);
+		return  (Proyecto)proyectoDAO.recuperarClasePorId(id);
 	}
 
 	@Override
@@ -57,44 +55,45 @@ public class ProyectoServiceImp implements ProyectoService {
 
 	@Override
 	public void editarProyecto(Proyecto proyecto) {
-		proyectoDAO.editarProyecto(proyecto);
+		proyectoDAO.editarClase(proyecto);
 		
 	}
 
 	@Override
 	public Long guardarProyecto(Proyecto proyecto, Long idUsuarioPrincipal) {
 		
-		Usuario usuario = usuarioDAO.recuperarUsuarioPorId(idUsuarioPrincipal);
+		Usuario usuario = usuarioDAO.recuperarClasePorId(idUsuarioPrincipal);
 		proyecto.setUsuarioPrincipal(usuario);
-		proyectoDAO.guardarProyecto(proyecto);
+		proyectoDAO.guardarClase(proyecto);
 		return proyecto.getId();
 	}
 
 	@Override
 	public Long actualizarProyecto(Proyecto proyecto, Long idUsuarioPrincipal, Long[] idUsuarios) {
-		Usuario usuarioPpal = usuarioDAO.recuperarUsuarioPorId(idUsuarioPrincipal);
+		Usuario usuarioPpal = usuarioDAO.recuperarClasePorId(idUsuarioPrincipal);
 		proyecto.getUsuarios().clear();
 		for (Long id : idUsuarios) {
-			Usuario usuario = usuarioDAO.recuperarUsuarioPorId(id);
+			Usuario usuario = usuarioDAO.recuperarClasePorId(id);
 			proyecto.getUsuarios().add(usuario);
 		}
-			
 		
 		proyecto.setUsuarioPrincipal(usuarioPpal);
-		proyectoDAO.guardarProyecto(proyecto);
+		proyectoDAO.guardarClase(proyecto);
 		return proyecto.getId();
 		
 	}
 
 	@Override
-	public List<Proyecto> buscarProyectosPorNombre(String campoBuscar) {
-		return proyectoDAO.buscarProyectoPorNombre(campoBuscar);
+	public List<Proyecto> buscarProyectos(String campoBuscar) {
+		return proyectoDAO.buscarProyecto(campoBuscar);
 	}
 	
 	@Override
 	public void editarTiempoProyecto(Double duracionEstimada, Long idProyecto) {
-		Proyecto proyecto = proyectoDAO.recuperarProyectoPorId(idProyecto);
-		proyecto.setTiempoEstimado(proyecto.getTiempoEstimado()-duracionEstimada);
-		proyectoDAO.guardarProyecto(proyecto);
+		Proyecto proyecto = proyectoDAO.recuperarClasePorId(idProyecto);
+		proyecto.setTiempoAcumulado(proyecto.getTiempoAcumulado() + duracionEstimada);
+		
+		proyecto.setTiempoReal(proyecto.getTiempoEstimado() - proyecto.getTiempoAcumulado());
+		proyectoDAO.guardarClase(proyecto);
 	}
 }

@@ -37,21 +37,21 @@ public class TareaServiceImp implements TareaService {
 
 	@Override
 	public void guardarTarea(Tarea tarea, Long idProyecto) {
-		tareaDAO.guardarTarea(tarea);
+		tareaDAO.guardarClase(tarea);
 		//log.info("ID de Proyecto en TAREA SERVICE: "+idProyecto);
-		Proyecto proyecto = proyectoDAO.recuperarProyectoPorId(idProyecto);
+		Proyecto proyecto = proyectoDAO.recuperarClasePorId(idProyecto);
 		proyecto.getTareas().add(tarea);
-		proyectoDAO.editarProyecto(proyecto);
+		proyectoDAO.editarClase(proyecto);
 	}
 
 	@Override
 	public List<Tarea> listarTareas() {
-		return tareaDAO.listarTareas();
+		return tareaDAO.listarClase(new Tarea());
 	}
 
 	@Override
 	public Tarea recuperarTareaPorId(Long id) {
-		return tareaDAO.recuperarTareaPorId(id);
+		return tareaDAO.recuperarClasePorId(id);
 	}
 
 	@Override
@@ -69,28 +69,28 @@ public class TareaServiceImp implements TareaService {
 
 	@Override
 	public void editarTarea(Tarea tarea) {
-		tareaDAO.editarTarea(tarea);
+		tareaDAO.editarClase(tarea);
 	}
 
-	@Override
-	public List<Tarea> buscarTareaPorNombre(String campoBuscar) {
-		return tareaDAO.buscarTareaPorNombre(campoBuscar);
-	}
+//	@Override
+//	public List<Tarea> buscarTarea(String campoBuscar) {
+//		return tareaDAO.buscarTarea(campoBuscar);
+//	}
 
 	@Override
 	public Long guardarComentario(Comentario comentario, Long idTarea) {
 
 		comentario.setFecha(new Date());
-		Tarea tarea = tareaDAO.recuperarTareaPorId(idTarea);
-		comentarioDAO.guardarComentario(comentario);
+		Tarea tarea = tareaDAO.recuperarClasePorId(idTarea);
+		comentarioDAO.guardarClase(comentario);
 		tarea.getComentarios().add(comentario);
-		tareaDAO.editarTarea(tarea);
+		tareaDAO.editarClase(tarea);
 		return comentario.getId();
 	}
 	
 	@Override
-	public List<Comentario> buscarComentarioPorContenido(String campoBuscar) {
-		return comentarioDAO.buscarComentarioPorContenido(campoBuscar);
+	public List<Comentario> buscarComentario(String campoBuscar, Long idTarea) {
+		return comentarioDAO.buscarComentario(campoBuscar, idTarea);
 	}
 
 }

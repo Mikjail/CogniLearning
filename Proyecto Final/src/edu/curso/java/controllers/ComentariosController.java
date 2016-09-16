@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.curso.java.bo.Comentario;
 import edu.curso.java.bo.Proyecto;
+import edu.curso.java.bo.Tarea;
+import edu.curso.java.controllers.forms.BuscarForm;
 import edu.curso.java.controllers.forms.ComentarioForm;
 import edu.curso.java.dao.ComentarioDAO;
 import edu.curso.java.services.ProyectoService;
@@ -40,31 +42,30 @@ public class ComentariosController {
 
 	@RequestMapping(value="/listarcomentarios", method = RequestMethod.GET)
 	public String listarComentarios(Model model) {
-		List<Comentario> comentarios = comentarioDAO.listarComentarios();
+		List<Comentario> comentarios = comentarioDAO.listarClase(new Comentario());
 		model.addAttribute("comentarios", comentarios);
 		return "/comentarios/listar";
 	}
 	
 	@RequestMapping(value="/vercomentario")
 	public String verComentario(@RequestParam Long id, Model model) {
-		Comentario comentario = comentarioDAO.recuperarComentarioPorId(id);
+		Comentario comentario = comentarioDAO.recuperarClasePorId(id);
 		model.addAttribute("comentario", comentario);
 		return "/comentarios/vercomentariomodal";
 	}
 	
 	@RequestMapping(value="/nuevocomentario")
-	public String nuevoComentario(@RequestParam Long idC, Long idT, Long idP, Model model) {
-		Proyecto proyecto = proyectoService.recuperarProyectoPorId(idP);
+	public String nuevoComentario(@RequestParam Long idT, Long idP, Model model) {
 		ComentarioForm comentarioForm = new ComentarioForm();
 		comentarioForm.setIdTarea(idT);
+		comentarioForm.setIdProyecto(idP);
 		model.addAttribute("comentarioForm", comentarioForm);
-		model.addAttribute("proyecto", proyecto);
-		log.info("ejecutando nuevo comentario para id tarea" + idC);
 		return "comentarios/form";
 	}
 	
 	@RequestMapping(value = "/guardarcomentario", method = RequestMethod.POST)
 	public String guardarComentario(@ModelAttribute("comentarioForm") ComentarioForm comentarioForm, Model model) {
+		
 		log.info("llego el comentario para el id" + comentarioForm.getIdTarea());
 		
 		Comentario comentario = null;
@@ -74,12 +75,12 @@ public class ComentariosController {
 		Long idUsuario = (long) 1;				 //a cambiar cuando se implemente el login
 		
 		if(idActual != null){
-			comentario = comentarioDAO.recuperarComentarioPorId(idActual);
+			comentario = comentarioDAO.recuperarClasePorId(idActual);
 			comentario.setComentario(comentarioForm.getComentario());
 			comentario.setUsuario(usuarioService.recuperarUsuarioPorId(idUsuario));
 			comentario.setFecha(new Date());
 			comentario.setEstado(comentarioForm.getEstado());
-			comentarioDAO.editarComentario(comentario);
+			comentarioDAO.editarClase(comentario);
 		} else {
 			comentario = new Comentario();
 			comentario.setComentario(comentarioForm.getComentario());
@@ -101,7 +102,7 @@ public class ComentariosController {
 	
 	@RequestMapping(value="/editarcomentario")
 	public String editarComentario(Model model, @RequestParam Long idC, Long idT, Long idP){
-		Comentario comentario = comentarioDAO.recuperarComentarioPorId(idC);
+		Comentario comentario = comentarioDAO.recuperarClasePorId(idC);
 		Proyecto proyecto = proyectoService.recuperarProyectoPorId(idP);
 		ComentarioForm comentarioForm = new ComentarioForm();
 		
@@ -110,6 +111,7 @@ public class ComentariosController {
 		comentarioForm.setEstado(comentario.getEstado());
 		comentarioForm.setIdUsuario(comentario.getUsuario().getId());
 		comentarioForm.setIdTarea(idT);
+		comentarioForm.setIdProyecto(idP);
 	
 		model.addAttribute("comentarioForm", comentarioForm);
 		model.addAttribute("proyecto", proyecto);
@@ -117,9 +119,18 @@ public class ComentariosController {
 	}
 	
 	@RequestMapping(value = "/buscarcomentarios", method = RequestMethod.POST)
-	public String buscarProyectos(@ModelAttribute("campoBuscar") String campoBuscar, Model model) {
-		List<Comentario> comentarios = comentarioDAO.buscarComentarioPorContenido(campoBuscar);
-		model.addAttribute("comentarios",comentarios);
+	public String buscarProyectos(@ModelAttribute("buscarForm") BuscarForm buscarForm, Model model) {
+		Long idTarea = buscarForm.getIdTarea();
+		Long idProy = buscarForm.getIdProy();
+		String campoBuscar = buscarForm.getCampoBuscar();
+		
+		Tarea tarea = tareaService.recuperarTareaPorId(idTarea);
+		Proyecto proyecto = proyectoService.recuperarProyectoPorId(idProy);
+		List<Comentario> comentarios = tareaService.buscarComentario(campoBuscar, idTarea);
+		
+		model.addAttribute("tarea", tarea);
+		model.addAttribute("comentarios", comentarios);
+		model.addAttribute("proyecto", proyecto);
 		return "/comentarios/buscadorcomentarios";
 	}
 }

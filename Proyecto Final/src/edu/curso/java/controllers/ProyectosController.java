@@ -1,5 +1,7 @@
 package edu.curso.java.controllers;
 
+import java.io.FileWriter;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -12,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.curso.java.CVSUtil.CSVUtil;
 import edu.curso.java.bo.Proyecto;
 import edu.curso.java.bo.Usuario;
 import edu.curso.java.controllers.forms.ProyectoForm;
-import edu.curso.java.controllers.forms.UsuarioForm;
 import edu.curso.java.services.ProyectoService;
+import edu.curso.java.services.TareaService;
 import edu.curso.java.services.UsuarioService;
 
 @Controller
@@ -30,6 +33,7 @@ public class ProyectosController {
 
 	@Autowired
 	private UsuarioService usuarioService;
+	
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(Model model) {
@@ -61,17 +65,25 @@ public class ProyectosController {
 	}
 	
 	@RequestMapping(value = "/guardarproyecto", method = RequestMethod.POST)
-	public String guardarUsuario(@ModelAttribute("proyectoForm") ProyectoForm proyectoForm, Model model) {
-		Proyecto proyecto = null;
+	public String guardarProyecto(@ModelAttribute("proyectoForm") ProyectoForm proyectoForm, Model model) {
+		Proyecto proyecto= null;
 		Long idActual = proyectoForm.getId();
 		Long idUsuarioPrincipal = proyectoForm.getIdUsuarioPrincipal();
 		Long [] idUsuarios = proyectoForm.getIdUsuarios();
+		
+		
 		
 		if(idActual != null){
 			proyecto= proyectoService.recuperarProyectoPorId(idActual);
 			proyecto.setNombre(proyectoForm.getNombre());
 			proyecto.setDescripcion(proyectoForm.getDescripcion());
+			if (proyecto.getTiempoEstimado()  !=  proyectoForm.getTiempoEstimado() && proyectoForm.getTiempoEstimado() >= proyecto.getTiempoAcumulado()) {
+				proyecto.setTiempoReal(proyectoForm.getTiempoEstimado() - proyecto.getTiempoAcumulado());	
+			}
 			proyecto.setTiempoEstimado(proyectoForm.getTiempoEstimado());
+			if (!proyecto.getEstado()) {
+				proyecto.setFechaFin(new Date());
+			}
 			idActual = proyectoService.actualizarProyecto(proyecto,idUsuarioPrincipal, idUsuarios);
 		} else {
 			proyecto = new Proyecto();
@@ -79,6 +91,8 @@ public class ProyectosController {
 			proyecto.setNombre(proyectoForm.getNombre());
 			proyecto.setDescripcion(proyectoForm.getDescripcion());
 			proyecto.setTiempoEstimado(proyectoForm.getTiempoEstimado());
+			proyecto.setTiempoReal(proyectoForm.getTiempoEstimado());
+			proyecto.setTiempoAcumulado(0.0);
 			idActual = proyectoService.actualizarProyecto(proyecto, idUsuarioPrincipal, idUsuarios);
 		}
 	
@@ -97,35 +111,34 @@ public class ProyectosController {
 		proyectoForm.setUsuarios(proyecto.getUsuarios());
 		proyectoForm.setTareas(proyecto.getTareas());
 		proyectoForm.setTiempoEstimado(proyecto.getTiempoEstimado());
-		
 		model.addAttribute("proyectoForm", proyectoForm);
 		model.addAttribute("usuarios", usuarioService.recuperarUsuarios());
 		return "/proyectos/formeditado";
 	}
 	
-	@RequestMapping(value = "/guardaredicionproyecto", method = RequestMethod.POST)
-	public String guardarEdicionUsuario(@ModelAttribute("proyectoForm") ProyectoForm proyectoForm, Model model, @RequestParam Long id) {
-		Proyecto proyecto = null;
-		Long idActual = proyectoForm.getId();
-		Long idUsuarioPrincipal = proyectoForm.getIdUsuarioPrincipal();
-		Long [] idUsuarios = proyectoForm.getIdUsuarios();
 	
-		proyecto= proyectoService.recuperarProyectoPorId(idActual);
-		proyecto.setNombre(proyectoForm.getNombre());
-		proyecto.setDescripcion(proyectoForm.getDescripcion());
-		proyecto.setTiempoEstimado(proyectoForm.getTiempoEstimado());
-		idActual = proyectoService.actualizarProyecto(proyecto,idUsuarioPrincipal, idUsuarios);
-	
-		return "redirect:/proyectos/listar.html";
-	}
 		
 	@RequestMapping(value = "/buscarproyectos", method = RequestMethod.POST)
 	public String buscarProyectos(@ModelAttribute("campoBuscar") String campoBuscar, Model model) {
 		log.info("Listando los proyectos");
-		List<Proyecto> proyectos = proyectoService.buscarProyectosPorNombre(campoBuscar);
+		List<Proyecto> proyectos = proyectoService.buscarProyectos(campoBuscar);
 		model.addAttribute("proyectos",proyectos);
 		return "/proyectos/buscadorproyectos";
 	}
 	
+	@RequestMapping(value= "/crearCVS")
+	public String crearCVS() throws Exception{
+		  String csvFile = "C:/Users/550714/Desktop/proyecto.csv";
+	      FileWriter writer = new FileWriter(csvFile);
+	      
+	      List<Proyecto> proyectos = proyectoService.listarProyectos();
+	     for (Proyecto proyecto : proyectos) {
+	    	 CSVUtil.writeLine(writer, Arrays.asList(proyecto.getNombre(), proyecto.getDescripcion(), proyecto.getFechaAlta().toString(), proyecto.getEstado().toString()));
+		      	
+		}
+	       writer.flush();
+	       writer.close();
+		return "redirect: listar.html";
+	}
 	
 }

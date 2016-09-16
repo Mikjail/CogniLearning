@@ -27,9 +27,20 @@ public class Proyecto {
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Tarea> tareas = new ArrayList<>();
 	private Boolean estado;
-	private double tiempoEstimado;
+	private Double tiempoEstimado;
+	private Double tiempoReal;
+	private Double tiempoAcumulado;
 	private Date fechaAlta;
+	private Date fechaFin;
 	
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
 	public Proyecto(){
 		this.estado = true;
 	}
@@ -90,11 +101,11 @@ public class Proyecto {
 		this.usuarioPrincipal = usuarioPrincipal;
 	}
 
-	public double getTiempoEstimado() {
+	public Double getTiempoEstimado() {
 		return tiempoEstimado;
 	}
 
-	public void setTiempoEstimado(double tiempoEstimado) {
+	public void setTiempoEstimado(Double tiempoEstimado) {
 		this.tiempoEstimado = tiempoEstimado;
 	}
 
@@ -104,6 +115,22 @@ public class Proyecto {
 
 	public void setFechaAlta(Date fechaAlta) {
 		this.fechaAlta = fechaAlta;
+	}
+
+	public double getTiempoReal() {
+		return tiempoReal;
+	}
+
+	public void setTiempoReal(Double tiempoReal) {
+		this.tiempoReal = tiempoReal;
+	}
+
+	public Double getTiempoAcumulado() {
+		return tiempoAcumulado;
+	}
+
+	public void setTiempoAcumulado(Double tiempoAcumulado) {
+		this.tiempoAcumulado = tiempoAcumulado;
 	}
 	
 	

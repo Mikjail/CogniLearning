@@ -6,8 +6,17 @@ public class UsuarioForm {
 	private String nombreCompleto;
 	private String usuario;
 	private String password;
-	private boolean activo;
+	private boolean estado;
+	private boolean lugar;
 	
+	
+	
+	public boolean isLugar() {
+		return lugar;
+	}
+	public void setLugar(boolean lugar) {
+		this.lugar = lugar;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -32,11 +41,11 @@ public class UsuarioForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean isActivo() {
-		return activo;
+	public boolean getEstado() {
+		return estado;
 	}
-	public void setActivo(boolean activo) {
-		this.activo = activo;
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 }
