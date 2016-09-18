@@ -1,0 +1,93 @@
+Nombre: Mikjail Salazar
+
+1.       EMPLEADOS CON LA DIRECCION Y EL PAIS EN DONDE TRABAJAN
+	
+	SELECT CONCAT(e.firstName," ",e.lastName) as Name, 
+	IFNULL(CONCAT(o.addressLine1," ",o.addressline2),"No tiene direccion registrada") as Address, o.country as Country
+	FROM employees as e
+	INNER JOIN offices as o
+	ON o.officeCode = e.officeCode;
+	2.       EMPLEADOS CON LA DIRECCION Y EL NOMBRE DEL CLIENTE RELACIONADO
+	SELECT cus.customerName as CustomerName, CONCAT(IFNULL(cus.addressLine1,"")," ",IFNULL(cus.addressLine2,"")) as Address, CONCAT(e.firstName," ",e.lastName) as EmployeeName
+	FROM customers as cus
+	INNER JOIN employees as e
+	ON e.employeeNumber = cus.salesRepEmployeeNumber
+	ORDER BY cus.customerName ASC;
+
+3.       EMPLEADOS CON EL NOMBRE DE SU SUPERVISOR
+	
+	SELECT employeesTable.Name as NombreEmpleado, IFNULL(CONCAT(em.firstName,' ',em.lastName),"No tiene Supervisor") as Supervisor
+	FROM (SELECT CONCAT(e.firstName," ",e.lastName) as Name, e.reportsTo
+	             FROM employees as e) as employeesTable
+	LEFT JOIN employees as em
+	ON em.employeeNumber = employeesTable.reportsTo
+	ORDER BY employeesTable.Name ASC;
+
+4.       EMPLEADOS CON LA CANTIDAD DE CLIENTES QUE CUENTA CADA UNO
+	
+	SELECT CONCAT(e.firstName," ",e.lastName) as EmployeeName, COUNT(cus.
+	customerNumber) as ClientsAmount
+	FROM employees as e
+	INNER JOIN customers as cus
+	ON  cus.salesRepEmployeeNumber = e.employeeNumber
+	GROUP BY e.firstName
+	ORDER BY e.firstName ASC;
+
+5.       EL EMPLEADO QUE + CLIENTES TIENE
+	
+	SELECT *
+	FROM (SELECT CONCAT(e.firstName," ",e.lastName) as EmployeeName,  
+	COUNT(cus.customerNumber) as ClientsAmount
+	FROM employees as e
+	INNER JOIN customers as cus
+	ON  cus.salesRepEmployeeNumber = e.employeeNumber
+	GROUP BY e.firstName
+	ORDER BY e.firstName ASC) as employeesTable
+	ORDER BY employeesTable.ClientsAmount DESC
+	LIMIT 1;
+
+6.       LOS 3 PRODUCTOS + BARATOS
+	
+	SELECT p.productName as ProductName, p.buyPrice as ProductPrice
+	FROM products as p
+	ORDER BY p.buyPrice ASC
+	LIMIT 3;
+
+7.       EL MONTO TOTAL DE DINERO PAGADO POR CADA CLIENTE
+	
+	SELECT cus.customerName as CustomerName, SUM(p.Amount) as Pagos
+	FROM customers as cus
+	INNER JOIN payments as p
+	ON p.customerNumber = cus.customerNumber
+	GROUP BY cus.customerName;
+
+8.       EL MONTO TOTAL DE DINERO PAGADO POR CADA CLIENTE CON EL NOMBRE DEL EMPLEADO RELACIONADO
+	
+	SELECT cus.customerName as CustomerName, SUM(p.Amount) as Pagos, CONCAT(e.firstName," ",e.lastName) as EmployeeName
+	FROM customers as cus
+	INNER JOIN payments as p
+	ON p.customerNumber = cus.customerNumber
+	INNER JOIN employees as e
+	ON e.EmployeeNumber = cus.salesRepEmployeeNumber
+	GROUP BY cus.customerName
+	ORDER BY cus.customerName ASC;
+
+9.       ACTUALIZAR EL PRECIO DE TODOS LOS PRODUCTOS EN UN 15%
+	
+	SELECT p.productName as ProductName, p.buyPrice as ProductPrice, (p.buyPrice * 1.15) as "Plus 15%"
+	FROM products as p
+
+10.   BORRAR TODAS LOS PAGOS DE LOS CLIENTES QUE SE ENCUENTRAN EN “X” STATE
+	DELETE FROM payments
+	WHERE payments.customerNumber
+	IN (SELECT cus.customerNumber
+	FROM customers as cus
+	WHERE cus.state = "NY"); 
+ 
+OPCIONALES
+1.       LISTAR TODOS LOS CLIENTES QUE NUNCA REALIZARON UN PAGO
+2.       LISTAR EL DETALLE DE UNA ORDEN CON EL PRODUCTO, CANTIDAD, PRECIO UNITARIO Y SUBTOTAL
+3.       CREAR 3 CONSULTAS SQL LIBREMENTE UTILIZANDO LAS TABLAS
+4.       CREAR UNA SP LIBREMENTE
+
+
